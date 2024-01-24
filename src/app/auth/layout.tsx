@@ -17,7 +17,7 @@ export default function AuthLayout({
 
     return (
         <div>
-            <nav className="flex mx-40 mb-10 items-center justify-start">
+            <nav className="flex mx-40 mb-10 items-center justify-start border-b border-grey">
                 <Link href="/">
                     <Image
                         className="my-5"
