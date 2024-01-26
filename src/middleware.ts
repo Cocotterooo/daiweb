@@ -7,6 +7,7 @@ export default authMiddleware({
         "/contacto",
         "/auth/sign-in",
         "/auth/sign-up",
+        "/auth/forgot-password",
         "/api/webhook(.*)",
         "/docs",
         "/docs/(.*)",

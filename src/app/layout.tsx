@@ -27,9 +27,14 @@ export default function RootLayout({
                         type="image/svg+xml"
                         sizes="any"
                     />
+                    <meta charSet="UTF-8" />
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1.0"
+                    />
                 </head>
                 <body
-                    className={`${inter.className} text-sm bg-[#1B669A] text-white`}
+                    className={`${inter.className} min-h-screen mx-5 bg-[#1B669A] text-sm text-white`}
                 >
                     {children}
                 </body>

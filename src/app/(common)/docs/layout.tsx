@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { IoIosCloseCircleOutline, IoIosMenu } from "react-icons/io";
 
 type NavigationLink = {
     href: string;
@@ -32,13 +34,15 @@ export default function DocsLayout({
 }) {
     const currentPath = usePathname();
 
+    const [showMenu, setShowMenu] = useState(false);
+
     const displayNavigationLink = (
         { href, title, children }: NavigationLink,
         index: number
     ): React.ReactNode => {
-        let linkTextStyle = "hover:text-black"
+        let linkTextStyle = "hover:text-black";
         if (currentPath === href) {
-            linkTextStyle = "text-black"
+            linkTextStyle = "text-black";
         }
 
         if (!children || children.length === 0) {
@@ -47,6 +51,7 @@ export default function DocsLayout({
                     <Link
                         className={`cursor-pointer font-bold mb-2 ${linkTextStyle}`}
                         href={href}
+                        onClick={() => setShowMenu(false)}
                     >
                         {title}
                     </Link>
@@ -59,21 +64,35 @@ export default function DocsLayout({
     };
 
     return (
-        <div className="flex mx-40">
-            <div className="w-1/5 max-w-1/5 h-screen border-r border-grey py-8 pr-8">
-                <div className="mb-4">
-                    <Link
-                        className="cursor-pointer hover:text-black font-bold text-xl"
-                        href="/docs"
-                    >
-                        Documentación
-                    </Link>
+        <div className="flex flex-col items-end min-h-screen">
+            {!showMenu && (
+                <button onClick={() => setShowMenu(true)}>
+                    <IoIosMenu size={24} />
+                </button>
+            )}
+            {showMenu && (
+                <div className="flex flex-col z-50 bg-[#1B669A] w-full min-h-screen">
+                    <div className="flex mb-4 items-center justify-between">
+                        <Link
+                            className="cursor-pointer hover:text-black font-bold text-xl"
+                            href="/docs"
+                        >
+                            Documentación
+                        </Link>
+                        <button onClick={() => setShowMenu(false)}>
+                            <IoIosCloseCircleOutline size={24} />
+                        </button>
+                    </div>
+                    {docsNavigationLinks.map(
+                        ({ href, title, children }, index) =>
+                            displayNavigationLink(
+                                { href, title, children },
+                                index
+                            )
+                    )}
                 </div>
-                {docsNavigationLinks.map(({ href, title, children }, index) =>
-                    displayNavigationLink({ href, title, children }, index)
-                )}
-            </div>
-            <div className="pl-8 w-4/5 max-w-4/5">{children}</div>
+            )}
+            {!showMenu && <div className="absolute mx-5 z-0">{children}</div>}
         </div>
     );
 }

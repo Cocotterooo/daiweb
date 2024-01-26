@@ -7,12 +7,11 @@ export default function CommonLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div>
-            <nav className="flex mx-40 mb-10 items-center justify-between border-b border-grey">
+        <div className="flex flex-col min-h-screen">
+            <nav className="flex mb-10 py-1 items-center justify-between border-b border-grey">
                 <ul className="flex items-center">
                     <Link href="/">
                         <Image
-                            className="my-5 mr-5"
                             src="/logo-dai-blanco.svg"
                             alt="DAI logo"
                             width={50}
@@ -46,7 +45,7 @@ export default function CommonLayout({
                 <ul className="flex">
                     <Link
                         href="/auth/sign-in"
-                        className="flex m-2 p-2 rounded-lg bg-[#1b1b1b] hover:bg-[#4f4f4f]"
+                        className="flex items-center m-2 p-2 rounded-lg bg-[#1b1b1b] hover:bg-[#4f4f4f]"
                     >
                         Ingresar
                     </Link>
@@ -59,6 +58,9 @@ export default function CommonLayout({
                 </ul>
             </nav>
             {children}
+            <footer className="flex mt-10 pt-1 pb-5 flex-col items-center">
+                <p>&copy; 2024 DAI - Galicia, España</p>
+            </footer>
         </div>
     );
 }

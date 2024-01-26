@@ -2,7 +2,7 @@ import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AuthLayout({
+export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;

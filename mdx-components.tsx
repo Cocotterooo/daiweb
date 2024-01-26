@@ -31,6 +31,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 <code className="">{children}</code>
             </div>
         ),
+        table: ({ children }) => (
+            <table className="table-auto my-4 p-2 border-0">{children}</table>
+        ),
+        thead: ({ children }) => <thead>{children}</thead>,
+        th: ({ children }) => <th className="p-2 font-normal">{children}</th>,
+        td: ({ children }) => <td className="p-2">{children}</td>,
+        tr: ({ children }) => (
+            <tr className="border border-solid p-2">{children}</tr>
+        ),
         ...components,
     };
 }

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AuthLayout({
+export default function BlogLayout({
     children,
 }: {
     children: React.ReactNode;

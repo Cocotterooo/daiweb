@@ -164,9 +164,7 @@ export default function Dashboard() {
                 )}
                 {showBorrowedItems && (
                     <div className="flex flex-col">
-                        <p>
-                            Mock data!!!!!!!!!!!!!!!!!
-                        </p>
+                        <p>Mock data!!!!!!!!!!!!!!!!!</p>
 
                         <table className="table-auto border-collapse my-4">
                             <thead>
