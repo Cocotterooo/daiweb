@@ -3,13 +3,17 @@ import { Inter } from "next/font/google";
 
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { esES } from "@clerk/localizations";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-    title: "Delegación de Alumnos de la Escuela de Ingeniería Industrial",
-    // TODO: Add description
-    // description: '',
+    title: "DAI uvigo",
+    description:
+        "Página web de la Delegación de Alumnos de la Escuela de Ingeniería Industrial de la Universidad de Vigo",
+    authors: {
+        name: "Axel Rodríguez Chang",
+    },
 };
 
 export default function RootLayout({
@@ -18,7 +22,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <ClerkProvider afterSignInUrl="/dashboard">
+        <ClerkProvider afterSignInUrl="/dashboard" localization={esES}>
             <html lang="es" className="bg-[#1B669A]">
                 <head>
                     <link

@@ -36,10 +36,14 @@ export default function DocsLayout({
 
     const [showMenu, setShowMenu] = useState(false);
 
-    const displayNavigationLink = (
+    function onClickShowMenu() {
+        setShowMenu(!showMenu);
+    }
+
+    function displayNavigationLink(
         { href, title, children }: NavigationLink,
         index: number
-    ): React.ReactNode => {
+    ): React.ReactNode {
         let linkTextStyle = "hover:text-black";
         if (currentPath === href) {
             linkTextStyle = "text-black";
@@ -61,12 +65,12 @@ export default function DocsLayout({
         return children.map(({ href, title, children }, jindex) =>
             displayNavigationLink({ href, title, children }, jindex)
         );
-    };
+    }
 
     return (
         <div className="flex flex-col items-end min-h-screen">
             {!showMenu && (
-                <button onClick={() => setShowMenu(true)} onTouchStart={() => setShowMenu(true)} type="button" className="cursor-pointer">
+                <button onClick={onClickShowMenu}>
                     <IoIosMenu size={24} />
                 </button>
             )}
@@ -79,7 +83,7 @@ export default function DocsLayout({
                         >
                             Documentación
                         </Link>
-                        <button onClick={() => setShowMenu(false)} onTouchStart={() => setShowMenu(false)} type="button" className="cursor-pointer">
+                        <button onClick={onClickShowMenu}>
                             <IoIosCloseCircleOutline size={24} />
                         </button>
                     </div>

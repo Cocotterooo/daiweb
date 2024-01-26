@@ -10,15 +10,17 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@clerk/localizations": "^1.26.13",
         "@clerk/nextjs": "^4.29.5",
         "@mdx-js/loader": "^3.0.0",
         "@mdx-js/react": "^3.0.0",
         "@next/mdx": "^14.1.0",
         "@types/mdx": "^2.0.10",
+        "@types/qrcode": "^1.5.5",
         "mongodb": "^6.3.0",
         "next": "^14.1.0",
-        "next-qrcode": "^2.5.1",
         "postcss": "^8",
+        "qrcode": "^1.5.3",
         "react": "^18",
         "react-dom": "^18",
         "react-icons": "^4.12.0",

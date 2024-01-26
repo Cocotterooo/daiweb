@@ -39,9 +39,7 @@ export default function SignInPage() {
 
         if (!isStudentEmail(email)) {
             setErrored(true);
-            setErrorMessage(
-                "Solo son válidos correos asociados a la uvigo."
-            );
+            setErrorMessage("Solo son válidos correos asociados a la uvigo.");
             return;
         }
 

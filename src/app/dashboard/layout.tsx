@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }) {
     return (
         <div>
-            <nav className="flex mx-40 mb-10 items-center justify-between border-b border-grey">
+            <nav className="flex mb-10 items-center justify-between border-b border-grey">
                 <Link href="/">
                     <Image
                         className="my-5"
@@ -22,6 +22,22 @@ export default function DashboardLayout({
                 </Link>
                 <UserButton afterSignOutUrl="/" />
             </nav>
+            <div className="flex justify-center">
+                <div className="flex flex-row my-4 items-center justify-between">
+                    <Link
+                        className="bg-black rounded-lg p-2 m-4"
+                        href="/dashboard/qr-code"
+                    >
+                        Ver mi código QR
+                    </Link>
+                    <Link
+                        className="bg-black rounded-lg p-2 m-4"
+                        href="/dashboard/borrowed-items"
+                    >
+                        Ver mis préstamos
+                    </Link>
+                </div>
+            </div>
             {children}
         </div>
     );
