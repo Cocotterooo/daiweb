@@ -34,7 +34,7 @@ export default function RootLayout({
                     />
                 </head>
                 <body
-                    className={`${inter.className} min-h-screen mx-5 bg-[#1B669A] text-sm text-white`}
+                    className={`${inter.className} min-h-screen px-5 bg-[#1B669A] text-sm text-white`}
                 >
                     {children}
                 </body>
