@@ -4,6 +4,8 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSignIn, useAuth } from "@clerk/nextjs";
+import { Button } from "@/components/Button";
+import { isStudentEmail } from "@/utils/email";
 
 export default function SignInPage() {
     const router = useRouter();
@@ -12,8 +14,8 @@ export default function SignInPage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [signInErrored, setSignInErrored] = useState(false);
-    const [signInErrorMessage, setSignInErrorMessage] = useState("");
+    const [errored, setErrored] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     if (!isLoaded) {
         return null;
@@ -28,6 +30,21 @@ export default function SignInPage() {
         if (!signIn) {
             return;
         }
+
+        if (!(email && password)) {
+            setErrored(true);
+            setErrorMessage("Por favor, llena todas las cajitas en blanco.");
+            return;
+        }
+
+        if (!isStudentEmail(email)) {
+            setErrored(true);
+            setErrorMessage(
+                "Solo son válidos correos asociados a la uvigo."
+            );
+            return;
+        }
+
         try {
             const result = await signIn.create({
                 identifier: email,
@@ -38,8 +55,8 @@ export default function SignInPage() {
                 router.push("/dashboard");
             }
         } catch (error: any) {
-            setSignInErrored(true);
-            setSignInErrorMessage(
+            setErrored(true);
+            setErrorMessage(
                 "¡Ups! Algo salió mal. Por favor, revisa tu correo y contraseña."
             );
             return;
@@ -66,8 +83,8 @@ export default function SignInPage() {
                                     value={email}
                                     placeholder="Ingresa tu correo"
                                     onChange={(element) => {
-                                        setSignInErrored(false);
-                                        setSignInErrorMessage("");
+                                        setErrored(false);
+                                        setErrorMessage("");
                                         setEmail(element.target.value);
                                     }}
                                 />
@@ -80,24 +97,25 @@ export default function SignInPage() {
                                     value={password}
                                     placeholder="Ingresa tu contraseña"
                                     onChange={(element) => {
-                                        setSignInErrored(false);
-                                        setSignInErrorMessage("");
+                                        setErrored(false);
+                                        setErrorMessage("");
                                         setPassword(element.target.value);
                                     }}
                                 />
                             </div>
-                            <button
-                                className="rounded bg-black p-1.5 my-2.5 w-full"
-                                onClick={submit}
-                            >
-                                Continúa
-                            </button>
+                            <Button onClick={submit} title="Continúa" />
                         </form>
-                        {signInErrored && (
+                        {errored && (
                             <div className="flex items-center text-rose-500 my-4">
-                                <p>{signInErrorMessage}</p>
+                                <p>{errorMessage}</p>
                             </div>
                         )}
+                        <Link
+                            href="/auth/forgot-password"
+                            className="mb-3 underline text-rose-300"
+                        >
+                            ¿Olvidaste tu contraseña?
+                        </Link>
                         <div className="flex flex-row">
                             <p>¿No tienes una cuenta?&nbsp;</p>
                             <Link

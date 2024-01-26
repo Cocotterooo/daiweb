@@ -17,10 +17,10 @@ export default function AuthLayout({
 
     return (
         <div>
-            <nav className="flex mx-40 mb-10 items-center justify-start border-b border-grey">
+            <nav className="flex mb-10 py-1 items-center justify-start border-b border-grey">
                 <Link href="/">
                     <Image
-                        className="my-5"
+                        className="my-2"
                         src="/logo-dai-blanco.svg"
                         alt="DAI logo"
                         width={50}

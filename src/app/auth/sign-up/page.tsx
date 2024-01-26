@@ -5,17 +5,23 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 import { IoIosArrowBack } from "react-icons/io";
+import { isStudentEmail } from "@/utils/email";
+import { TextInput } from "@/components/TextInput";
+import { Button } from "@/components/Button";
+import { getClerErrorMessage } from "@/utils/clerkError";
 
 export default function SignUpPage() {
     const router = useRouter();
     const { isLoaded, signUp, setActive } = useSignUp();
 
-    const [emailAddress, setEmailAddress] = useState("");
+    const [email, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [pendingVerification, setPendingVerification] = useState(false);
     const [code, setCode] = useState("");
-    const [signUpErrored, setSignUpErrored] = useState(false);
-    const [signUpErrorMessage, setSignUpErrorMessage] = useState("");
+
+    const [errored, setErrored] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
@@ -23,44 +29,54 @@ export default function SignUpPage() {
             return;
         }
 
-        if (
-            !(
-                emailAddress.includes("alumnos.uvigo.gal") ||
-                emailAddress.includes("alumnos.uvigo.es")
-            )
-        ) {
-            setSignUpErrored(true);
-            setSignUpErrorMessage(
-                "Solo son válidos correos asociados a la Universidad de Vigo"
-            );
+        if (!(email && password && passwordConfirmation)) {
+            setErrored(true);
+            setErrorMessage("Por favor, llena todas las cajitas en blanco.");
+            return;
+        }
+
+        if (!isStudentEmail(email)) {
+            setErrored(true);
+            setErrorMessage("Solo son válidos correos asociados a la uvigo.");
+            return;
+        }
+
+        if (password !== passwordConfirmation) {
+            setErrored(true);
+            setErrorMessage("Tus contraseñas no coinciden.");
             return;
         }
 
         try {
             await signUp.create({
-                emailAddress,
+                emailAddress: email,
                 password,
             });
+        } catch (error: any) {
+            const errorMessage = getClerErrorMessage(error.errors[0]);
+            if (!errorMessage) {
+                console.error(error.errors[0]);
+                return;
+            }
+            setErrored(true);
+            setErrorMessage(errorMessage);
+            return;
+        }
+
+        try {
             await signUp.prepareEmailAddressVerification({
                 strategy: "email_code",
             });
             setPendingVerification(true);
-        } catch (err: any) {
-            console.log(err);
-            if (err.errors[0].code === "form_password_pwned") {
-                setSignUpErrored(true);
-                setSignUpErrorMessage(
-                    "Contraseña comprometida. Por tu seguridad, elige otra."
-                );
+        } catch (error: any) {
+            const errorMessage = getClerErrorMessage(error.errors[0]);
+            if (!errorMessage) {
+                console.error(error.errors[0]);
                 return;
             }
-            if (err.errors[0].code === "form_identifier_exists") {
-                setSignUpErrored(true);
-                setSignUpErrorMessage(
-                    "Correo electrónico en uso. Por favor, intenta con otro."
-                );
-                return;
-            }
+            setErrored(true);
+            setErrorMessage(errorMessage);
+            return;
         }
     };
 
@@ -83,8 +99,15 @@ export default function SignUpPage() {
                 await setActive({ session: completeSignUp.createdSessionId });
                 router.push("/dashboard");
             }
-        } catch (err: any) {
-            console.error(JSON.stringify(err, null, 2));
+        } catch (error: any) {
+            const errorMessage = getClerErrorMessage(error.errors[0]);
+            if (!errorMessage) {
+                console.error(error.errors[0]);
+                return;
+            }
+            setErrored(true);
+            setErrorMessage(errorMessage);
+            return;
         }
     };
 
@@ -95,56 +118,47 @@ export default function SignUpPage() {
             </div>
             {!pendingVerification && (
                 <div className="flex flex-col items-center justify-center">
-                    <form className="flex flex-col items-center my-1.5 w-60">
-                        <div className="flex flex-col my-1.5 w-60">
-                            <label htmlFor="email">Correo de la uvigo</label>
-                            <input
-                                className="my-0.5 rounded text-black py-0.5 px-1.5 bg-[#f2f2f2]"
-                                onChange={(element) => {
-                                    setSignUpErrored(false);
-                                    setSignUpErrorMessage("");
-                                    setEmailAddress(element.target.value);
-                                }}
-                                id="email"
-                                name="email"
-                                type="email"
-                                placeholder="Ingresa tu correo"
-                            />
-                        </div>
-                        <div className="flex flex-col my-1.5 w-60">
-                            <label htmlFor="password">Contraseña</label>
-                            <input
-                                className="my-0.5 rounded text-black py-0.5 px-1.5 bg-[#f2f2f2]"
-                                onChange={(element) =>
-                                    setPassword(element.target.value)
-                                }
-                                id="password"
-                                name="password"
-                                type="password"
-                                placeholder="Ingresa tu contraseña"
-                            />
-                        </div>
-                        <button
-                            className="rounded bg-black p-1.5 my-2.5 w-full"
-                            onClick={handleSubmit}
-                        >
-                            Empieza
-                        </button>
+                    <form
+                        className="flex flex-col items-center my-1.5 w-60"
+                        onSubmit={handleSubmit}
+                    >
+                        <TextInput
+                            label="Correo uvigo"
+                            htmlFor="email"
+                            onChange={(element) => {
+                                setErrored(false);
+                                setErrorMessage("");
+                                setEmailAddress(element.target.value);
+                            }}
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="harrypotter@alumnos.uvigo.es"
+                        />
+                        <TextInput
+                            htmlFor="password"
+                            label="Tu nueva contraseña"
+                            onChange={(element) =>
+                                setPassword(element.target.value)
+                            }
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Crea una contraseña"
+                        />
+                        <TextInput
+                            htmlFor="password"
+                            label="Confirma tu nueva contraseña"
+                            onChange={(element) =>
+                                setPasswordConfirmation(element.target.value)
+                            }
+                            id="password-confirmation"
+                            name="password confirmation"
+                            type="password"
+                            placeholder="Confirma tu contraseña"
+                        />
+                        <Button title="Empieza" />
                     </form>
-                    {signUpErrored && (
-                        <div className="flex items-center text-rose-500 my-4 w-60">
-                            <p>{signUpErrorMessage}</p>
-                        </div>
-                    )}
-                    <div className="flex flex-row">
-                        <p>¿Ya tienes una cuenta?&nbsp;</p>
-                        <Link
-                            href="/auth/sign-in"
-                            className="underline text-rose-300"
-                        >
-                            Ingresa sesión
-                        </Link>
-                    </div>
                 </div>
             )}
             {pendingVerification && (
@@ -165,24 +179,31 @@ export default function SignUpPage() {
                         </button>
                     </div>
                     <form className="flex flex-col my-1.5 w-60">
-                        <label htmlFor="verification-code">Código</label>
-                        <input
-                            className="my-0.5 rounded text-black py-0.5 px-1.5 bg-[#f2f2f2]"
+                        <TextInput
                             value={code}
+                            htmlFor="verification-code"
+                            label="Código"
                             placeholder="Código de verificación"
                             id="verification-code"
                             name="verficacion-code"
                             onChange={(e) => setCode(e.target.value)}
+                            type="text"
                         />
-                        <button
-                            className="rounded bg-black p-1.5 mt-2.5"
-                            onClick={onPressVerify}
-                        >
-                            Verify Email
-                        </button>
+                        <Button onClick={onPressVerify} title="Verify Email" />
                     </form>
                 </div>
             )}
+            {errored && (
+                <div className="flex items-center text-rose-500 my-4">
+                    <p>{errorMessage}</p>
+                </div>
+            )}
+            <div className="flex flex-row">
+                <p>¿Ya tienes una cuenta?&nbsp;</p>
+                <Link href="/auth/sign-in" className="underline text-rose-300">
+                    Ingresa
+                </Link>
+            </div>
         </div>
     );
 }
