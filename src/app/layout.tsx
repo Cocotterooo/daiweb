@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
     return (
         <ClerkProvider afterSignInUrl="/dashboard">
-            <html lang="es">
+            <html lang="es" className="bg-[#1B669A]">
                 <head>
                     <link
                         rel="icon"

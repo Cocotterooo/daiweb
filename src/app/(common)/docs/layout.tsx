@@ -79,7 +79,7 @@ export default function DocsLayout({
                         >
                             Documentación
                         </Link>
-                        <button onClick={() => setShowMenu(false)} onTouchStart={() => setShowMenu(true)}>
+                        <button onClick={() => setShowMenu(false)} type="button" className="cursor-pointer">
                             <IoIosCloseCircleOutline size={24} />
                         </button>
                     </div>
