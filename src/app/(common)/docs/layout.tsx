@@ -66,7 +66,7 @@ export default function DocsLayout({
     return (
         <div className="flex flex-col items-end min-h-screen">
             {!showMenu && (
-                <button onClick={() => setShowMenu(true)}>
+                <button onClick={() => setShowMenu(true)} onTouchStart={() => setShowMenu(true)}>
                     <IoIosMenu size={24} />
                 </button>
             )}
@@ -79,7 +79,7 @@ export default function DocsLayout({
                         >
                             Documentación
                         </Link>
-                        <button onClick={() => setShowMenu(false)}>
+                        <button onClick={() => setShowMenu(false)} onTouchStart={() => setShowMenu(true)}>
                             <IoIosCloseCircleOutline size={24} />
                         </button>
                     </div>
