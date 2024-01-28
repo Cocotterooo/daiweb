@@ -1,29 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
-import { displayNavigationLink, NavigationLink } from "./NavigationLinksList";
 import { IoIosArrowBack } from "react-icons/io";
+import { NavigationLinks } from "./NavigationLinksList";
+import { NavigationLink } from "@/types";
 
 type SideBarProps = {
+    links: NavigationLink[];
     show: boolean;
     showSetter: Dispatch<SetStateAction<boolean>>;
 };
 
-const docsNavigationLinks: NavigationLink[] = [
-    { href: "/docs/primeros-pasos", title: "Primeros pasos" },
-    {
-        href: "/docs/primeros-pasos",
-        title: "Nuevo alumnado",
-        children: [
-            {
-                href: "/docs/primeros-pasos/nuevo-alumnado",
-                title: "Nuevo alumnado",
-            },
-        ],
-    },
-    { href: "/docs/prestamo-de-materiales", title: "Préstamo de materiales" },
-    { href: "/docs/reserva-de-espacios", title: "Reserva de espacios" },
-];
-
-export default function SideBar({ show, showSetter }: SideBarProps) {
+export default function SideBar({ links, show, showSetter }: SideBarProps) {
     const className =
         "bg-[#0c4d66] p-2 w-125 transition-[margin-right] ease-in-out duration-500 fixed md:static top-0 bottom-0 right-0 z-40";
     const appendClass = show ? " mr-0" : " mr-[-250px] md:mr-0";
@@ -48,14 +34,10 @@ export default function SideBar({ show, showSetter }: SideBarProps) {
                     <h3 className="mb-2 font-bold text-xl">Documentación</h3>
                 </div>
                 <div className="flex flex-col">
-                    {docsNavigationLinks.map(
-                        ({ href, title, children }, index) =>
-                            displayNavigationLink(
-                                { href, title, children },
-                                showSetter,
-                                index
-                            )
-                    )}
+                    <NavigationLinks
+                        links={links}
+                        textStyleCallback={showSetter}
+                    />
                 </div>
             </div>
             {show ? <ModalOverlay /> : <></>}

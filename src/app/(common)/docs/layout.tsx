@@ -1,8 +1,23 @@
-"use client";
-
 import SideBar from "@/components/SideBar";
+import { NavigationLink } from "@/types";
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
+
+const docsNavigationLinks: NavigationLink[] = [
+    { href: "/docs/primeros-pasos", title: "Primeros pasos" },
+    {
+        href: "/docs/primeros-pasos",
+        title: "Nuevo alumnado",
+        children: [
+            {
+                href: "/docs/primeros-pasos/nuevo-alumnado",
+                title: "Nuevo alumnado",
+            },
+        ],
+    },
+    { href: "/docs/prestamo-de-materiales", title: "Préstamo de materiales" },
+    { href: "/docs/reserva-de-espacios", title: "Reserva de espacios" },
+];
 
 export default function DocsLayout({
     children,
@@ -25,7 +40,11 @@ export default function DocsLayout({
                     <p>Más docs</p>
                     <IoIosArrowForward size={20} />
                 </div>
-                <SideBar show={showSidebar} showSetter={setShowSidebar} />
+                <SideBar
+                    links={docsNavigationLinks}
+                    show={showSidebar}
+                    showSetter={setShowSidebar}
+                />
                 <div className="flex flex-col md:w-full min-h-screen">
                     {children}
                 </div>
