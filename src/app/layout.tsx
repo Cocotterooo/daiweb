@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
     return (
         <ClerkProvider afterSignInUrl="/dashboard" localization={esES}>
-            <html lang="es" className="bg-[#1B669A]">
+            <html lang="es" className="bg-steel-blue">
                 <head>
                     <link
                         rel="icon"
@@ -38,7 +38,7 @@ export default function RootLayout({
                     />
                 </head>
                 <body
-                    className={`${inter.className} min-h-screen px-5 bg-[#1B669A] text-sm text-white`}
+                    className={`${inter.className} min-h-screen px-5 bg-steel-blue text-sm text-white`}
                 >
                     {children}
                 </body>

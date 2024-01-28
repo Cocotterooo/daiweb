@@ -8,7 +8,7 @@ export default function CommonLayout({
 }) {
     return (
         <div className="flex flex-col min-h-screen">
-            <nav className="flex mb-10 py-1 items-center justify-between border-b border-grey">
+            <nav className="flex mb-2 py-1 items-center justify-between border-b border-grey">
                 <ul className="flex items-center">
                     <Link href="/">
                         <Image

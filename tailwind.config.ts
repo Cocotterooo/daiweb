@@ -8,5 +8,15 @@ const config: Config = {
         "./mdx-components.tsx",
     ],
     plugins: [],
+    theme: {
+        extend: {
+            colors: {
+                "steel-blue": "#1b669a",
+            },
+            spacing: {
+                "125": "15.625rem",
+            },
+        },
+    },
 };
 export default config;
