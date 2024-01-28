@@ -1,3 +1,5 @@
+"use client"
+
 import SideBar from "@/components/SideBar";
 import { NavigationLink } from "@/types";
 import { useState } from "react";
