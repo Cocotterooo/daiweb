@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Dispatch, SetStateAction } from "react";
 import { IoIosArrowBack } from "react-icons/io";
@@ -28,7 +28,10 @@ export default function SideBar({ links, show, showSetter }: SideBarProps) {
     return (
         <>
             <div className={`${className}${appendClass}`}>
-                <div className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-16 justify-self-end">
+                <div
+                    className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-16 justify-self-end"
+                    onClick={() => showSetter(!show)}
+                >
                     <IoIosArrowBack />
                     Atrás
                 </div>

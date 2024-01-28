@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import SideBar from "@/components/SideBar";
 import { NavigationLink } from "@/types";
@@ -28,15 +28,11 @@ export default function DocsLayout({
 }) {
     const [showSidebar, setShowSidebar] = useState(false);
 
-    function onClickShowMenu() {
-        setShowSidebar(!showSidebar);
-    }
-
     return (
         <div className="min-h-screen">
             <div className="flex flex-col grid">
                 <div
-                    onClick={onClickShowMenu}
+                    onClick={() => setShowSidebar(!showSidebar)}
                     className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-24 justify-self-end"
                 >
                     <p>Más docs</p>
