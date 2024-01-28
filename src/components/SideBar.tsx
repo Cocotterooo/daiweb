@@ -1,3 +1,5 @@
+"use client"
+
 import { Dispatch, SetStateAction } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { NavigationLinks } from "./NavigationLinksList";
