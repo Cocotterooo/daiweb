@@ -30,10 +30,10 @@ export default function DocsLayout({
 
     return (
         <div className="min-h-screen">
-            <div className="flex flex-col grid">
+            <div className="flex-col grid lg:flex-row lg:flex">
                 <div
                     onClick={() => setShowSidebar(!showSidebar)}
-                    className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-24 justify-self-end"
+                    className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-24 justify-self-end lg:hidden"
                 >
                     <p>Más docs</p>
                     <IoIosArrowForward size={20} />
@@ -43,7 +43,7 @@ export default function DocsLayout({
                     show={showSidebar}
                     showSetter={setShowSidebar}
                 />
-                <div className="flex flex-col md:w-full min-h-screen">
+                <div className="flex flex-col w-full min-h-screen">
                     {children}
                 </div>
             </div>

@@ -7,7 +7,7 @@ export default async function QRCodePage() {
     const user = await currentUser();
 
     if (!user) {
-        return null;
+        return null
     }
 
     // TODO: Will need to parse public metadata in the future ?
@@ -42,7 +42,7 @@ export default async function QRCodePage() {
                 Muestra este código en la sede de la DAI para solicitar algún
                 préstamo.
             </p>
-            <Link href="/docs" className="bg-black p-2 my-4 rounded-lg">
+            <Link href="/docs/prestamo-de-materiales" className="bg-black p-2 my-4 rounded-lg">
                 Más información
             </Link>
         </div>
