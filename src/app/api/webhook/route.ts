@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { UserWebhookEvent, WebhookEvent } from "@clerk/nextjs/server";
-import { Database } from "@/server/database";
+import database from "@/database/client";
 
 // TODO: Log all events and errors
 export async function POST(req: Request) {
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     if (!WEBHOOK_SECRET) {
         throw new Error(
-            "Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local"
+            "Couldn't find WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local"
         );
     }
 
@@ -48,7 +48,6 @@ export async function POST(req: Request) {
         });
     }
 
-    const db = new Database();
     switch (event.type) {
         case "user.created":
             if (event.data.email_addresses.length !== 1) {
@@ -64,85 +63,48 @@ export async function POST(req: Request) {
                     { status: 422 }
                 );
             }
-            try {
-                const created_at = new Date(event.data.created_at);
-                let emailIsVerified = false;
-                if (
-                    event.data.email_addresses[0].verification.status ===
-                    "verified"
-                ) {
-                    emailIsVerified = true;
-                }
-                const userWasCreated = await db.createUser(
-                    event.data.id,
-                    event.data.email_addresses[0].email_address,
-                    emailIsVerified,
-                    created_at,
-                    false
-                );
-                if (!userWasCreated) {
-                    return new Response("User could not created", {
-                        status: 500,
-                    });
-                }
-                return new Response("", { status: 200 });
-            } catch (error: any) {
-                if (
-                    (error as Error).message === "unique constraint violation"
-                ) {
-                    return new Response(
-                        "User with given credentials already exists",
-                        { status: 409 }
-                    );
-                }
-                console.error(error);
-                return new Response("Unknown error occured", { status: 500 });
+            let emailIsVerified = false;
+            if (
+                event.data.email_addresses[0].verification.status === "verified"
+            ) {
+                emailIsVerified = true;
             }
-
-        case "user.updated":
-            try {
-                const userId = await db.updateUser(
-                    event.data.id,
-                    event.data.email_addresses[0].email_address,
-                    event.data.first_name,
-                    event.data.last_name,
-                    new Date(event.data.updated_at)
-                );
-                if (!userId) {
-                    return new Response(
-                        "No user was found with given external id",
-                        { status: 404 }
-                    );
+            const {
+                error: insertError,
+                status,
+                statusText,
+            } = await database.from("user").insert({
+                external_user_id: event.data.id,
+                email: event.data.email_addresses[0].email_address,
+                is_staff: false,
+                is_verified: false,
+                last_updated_at: new Date(event.data.created_at).toISOString(),
+            });
+            if (insertError) {
+                console.error(insertError);
+                if (
+                    insertError.message ===
+                    'duplicate key value violates unique constraint "users_external_user_id_key"'
+                ) {
+                    return new Response("User already exists", { status: 409 });
                 }
-                return new Response("", { status: 200 });
-            } catch (err: any) {
-                console.error(err);
-                return new Response("Unknown error occured", { status: 500 });
+                console.error(insertError);
+                return new Response("User could not be created", {
+                    status: 500,
+                });
+            }
+            if (status === 201 && statusText === "Created") {
+                return new Response("", { status: 201 });
             }
             break;
+        // TODO: Enable this
+        case "user.updated":
+            break;
         case "user.deleted":
-            if (event.data.deleted === true) {
-                if (!event.data.id) {
-                    return new Response("", { status: 500 });
-                }
-                try {
-                    const deletedUserId = await db.deleteUser(event.data.id);
-                    if (!deletedUserId) {
-                        return new Response(
-                            "No user was found with given external id",
-                            { status: 404 }
-                        );
-                    }
-                    return new Response("", { status: 200 });
-                } catch (err: any) {
-                    console.error(err);
-                    return new Response("Unknown error occured", {
-                        status: 500,
-                    });
-                }
-            }
+            break;
+
         default:
-            console.error("unrecognized event was sent", [event]);
+            console.error("Unrecognized event was sent", [event]);
             return new Response("Unrecognized event", { status: 500 });
     }
 }
