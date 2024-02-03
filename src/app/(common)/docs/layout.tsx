@@ -6,14 +6,21 @@ import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 const docsNavigationLinks: NavigationLink[] = [
-    { href: "/docs/primeros-pasos", title: "Primeros pasos" },
     {
         href: "/docs/primeros-pasos",
-        title: "Nuevo alumnado",
+        title: "Primeros pasos",
         children: [
             {
-                href: "/docs/primeros-pasos/nuevo-alumnado",
-                title: "Nuevo alumnado",
+                href: "/docs/primeros-pasos/crear-cuenta-dai",
+                title: "Crea tu cuenta DAI",
+            },
+            {
+                href: "/docs/primeros-pasos/correo-uvigo",
+                title: "Añadir el correo de la uvigo",
+            },
+            {
+                href: "/docs/primeros-pasos/wifi",
+                title: "Activar el WiFi",
             },
         ],
     },
@@ -39,11 +46,12 @@ export default function DocsLayout({
                     <IoIosArrowForward size={20} />
                 </div>
                 <SideBar
+                    title="Documentación"
                     links={docsNavigationLinks}
                     show={showSidebar}
                     showSetter={setShowSidebar}
                 />
-                <div className="flex flex-col w-full min-h-screen">
+                <div className="flex flex-col w-full min-h-screen lg:ml-20">
                     {children}
                 </div>
             </div>

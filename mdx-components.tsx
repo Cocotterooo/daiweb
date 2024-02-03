@@ -15,7 +15,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             <h4 className="text-lg font-bold my-2">{children}</h4>
         ),
         a: ({ children, href }) => (
-            <a className="font-bold underline" href={href}>
+            <a
+                className="font-bold underline"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 {children}
             </a>
         ),
