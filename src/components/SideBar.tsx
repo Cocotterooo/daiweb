@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { NavigationLinks } from "./NavigationLinksList";
+import { MenuItems } from "./MenuItems";
 import { NavigationLink } from "@/types";
 import Link from "next/link";
 
@@ -10,11 +10,17 @@ type SideBarProps = {
     links: NavigationLink[];
     show: boolean;
     showSetter: Dispatch<SetStateAction<boolean>>;
+    title?: string | undefined;
 };
 
-export default function SideBar({ links, show, showSetter }: SideBarProps) {
+export default function SideBar({
+    title,
+    links,
+    show,
+    showSetter,
+}: SideBarProps) {
     const className =
-        "bg-[#0c4d66] p-2 w-125 transition-[margin-right] ease-in-out duration-500 fixed md:static top-0 bottom-0 right-0 z-40 lg:bg-transparent";
+        "bg-[#0c4d66] px-2 w-125 transition-[margin-right] ease-in-out duration-500 fixed md:static top-0 bottom-0 right-0 z-40 lg:bg-transparent";
     const appendClass = show ? " mr-0" : " mr-[-250px] md:mr-0";
 
     function ModalOverlay() {
@@ -36,16 +42,15 @@ export default function SideBar({ links, show, showSetter }: SideBarProps) {
                     <IoIosArrowBack />
                     Atrás
                 </div>
-                <div className="mb-2">
-                    <Link href="/docs" className="font-bold text-xl">
-                        Documentación
-                    </Link>
-                </div>
+                {title && (
+                    <div>
+                        <Link href="/docs" className="font-bold text-xl">
+                            {title}
+                        </Link>
+                    </div>
+                )}
                 <div className="flex flex-col">
-                    <NavigationLinks
-                        links={links}
-                        textStyleCallback={showSetter}
-                    />
+                    <MenuItems links={links} textStyleCallback={showSetter} />
                 </div>
             </div>
             {show ? <ModalOverlay /> : <></>}

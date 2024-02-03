@@ -9,6 +9,7 @@ type TextInputProps = {
     type: HTMLInputTypeAttribute;
     htmlFor?: string | undefined;
     value?: string | number | readonly string[] | undefined;
+    hidden?: boolean | undefined;
 };
 
 export function TextInput({
@@ -20,6 +21,7 @@ export function TextInput({
     placeholder,
     type,
     value,
+    hidden,
 }: TextInputProps): JSX.Element {
     return (
         <div className="flex flex-col my-1.5 min-w-full">
@@ -32,6 +34,7 @@ export function TextInput({
                 type={type}
                 placeholder={placeholder}
                 value={value}
+                hidden={hidden}
             />
         </div>
     );
