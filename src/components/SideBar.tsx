@@ -3,18 +3,20 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { MenuItems } from "./MenuItems";
-import { NavigationLink } from "@/types";
+import { MenuItemLink } from "@/types";
 import Link from "next/link";
 
 type SideBarProps = {
-    links: NavigationLink[];
+    links: MenuItemLink[];
     show: boolean;
     showSetter: Dispatch<SetStateAction<boolean>>;
     title?: string | undefined;
+    titleHref?: string | undefined;
 };
 
 export default function SideBar({
     title,
+    titleHref,
     links,
     show,
     showSetter,
@@ -42,9 +44,9 @@ export default function SideBar({
                     <IoIosArrowBack />
                     Atrás
                 </div>
-                {title && (
+                {title && titleHref && (
                     <div>
-                        <Link href="/docs" className="font-bold text-xl">
+                        <Link href={titleHref} className="font-bold text-xl">
                             {title}
                         </Link>
                     </div>

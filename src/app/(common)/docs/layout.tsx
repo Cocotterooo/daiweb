@@ -1,11 +1,7 @@
-"use client";
+import { Menu } from "@/components/Menu";
+import { MenuItemLink } from "@/types";
 
-import SideBar from "@/components/SideBar";
-import { NavigationLink } from "@/types";
-import { useState } from "react";
-import { IoIosArrowForward } from "react-icons/io";
-
-const docsNavigationLinks: NavigationLink[] = [
+const docsMenuLinks: MenuItemLink[] = [
     {
         href: "/docs/primeros-pasos",
         title: "Primeros pasos",
@@ -33,24 +29,10 @@ export default function DocsLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const [showSidebar, setShowSidebar] = useState(false);
-
     return (
         <div className="min-h-screen">
             <div className="flex-col grid lg:flex-row lg:flex">
-                <div
-                    onClick={() => setShowSidebar(!showSidebar)}
-                    className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-24 justify-self-end lg:hidden"
-                >
-                    <p>Más docs</p>
-                    <IoIosArrowForward size={20} />
-                </div>
-                <SideBar
-                    title="Documentación"
-                    links={docsNavigationLinks}
-                    show={showSidebar}
-                    showSetter={setShowSidebar}
-                />
+                <Menu title="Documentación" titleHref="/docs" menuItemLinks={docsMenuLinks} />
                 <div className="flex flex-col w-full min-h-screen lg:ml-20">
                     {children}
                 </div>

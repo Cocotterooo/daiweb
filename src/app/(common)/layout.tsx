@@ -21,7 +21,7 @@ export default function CommonLayout({
                     </Link>
                     <Link
                         href="/docs"
-                        className="flex m-2 p-1 rounded hover:bg-[#cfd1d3] hover:text-black"
+                        className="flex m-2 ml-4 p-1 rounded hover:bg-[#cfd1d3] hover:text-black"
                     >
                         Docs
                     </Link>

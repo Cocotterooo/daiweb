@@ -1,5 +1,5 @@
-export type NavigationLink = {
+export type MenuItemLink = {
     href: string;
     title: string;
-    children?: NavigationLink[];
+    children?: MenuItemLink[];
 };

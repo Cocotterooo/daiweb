@@ -9,6 +9,69 @@ export type Json =
 export interface Database {
     public: {
         Tables: {
+            inventory_item: {
+                Row: {
+                    barcode: number;
+                    created_at: string;
+                    description: string;
+                    id: number;
+                    is_available: boolean;
+                    is_booked: boolean;
+                    status: string;
+                };
+                Insert: {
+                    barcode: number;
+                    created_at?: string;
+                    description: string;
+                    id?: number;
+                    is_available?: boolean;
+                    is_booked?: boolean;
+                    status?: string;
+                };
+                Update: {
+                    barcode?: number;
+                    created_at?: string;
+                    description?: string;
+                    id?: number;
+                    is_available?: boolean;
+                    is_booked?: boolean;
+                    status?: string;
+                };
+                Relationships: [];
+            };
+            inventory_item_booking: {
+                Row: {
+                    created_at: string;
+                    item_id: number;
+                    user_id: number;
+                };
+                Insert: {
+                    created_at?: string;
+                    item_id?: number;
+                    user_id?: number;
+                };
+                Update: {
+                    created_at?: string;
+                    item_id?: number;
+                    user_id?: number;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "inventory_item_booking_item_id_fkey";
+                        columns: ["item_id"];
+                        isOneToOne: false;
+                        referencedRelation: "inventory_item";
+                        referencedColumns: ["id"];
+                    },
+                    {
+                        foreignKeyName: "inventory_item_booking_user_id_fkey";
+                        columns: ["user_id"];
+                        isOneToOne: false;
+                        referencedRelation: "user";
+                        referencedColumns: ["id"];
+                    },
+                ];
+            };
             user: {
                 Row: {
                     created_at: string;

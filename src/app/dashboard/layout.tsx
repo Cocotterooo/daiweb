@@ -1,15 +1,10 @@
-"use client";
-
-import SideBar from "@/components/SideBar";
-import { NavigationLink } from "@/types";
+import { Menu } from "@/components/Menu";
+import { MenuItemLink } from "@/types";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { IoIosArrowForward } from "react-icons/io";
 
-const dashboardNavigationLinks: NavigationLink[] = [
-    { href: "/dashboard/home", title: "Inicio" },
+const dashboardNavigationLinks: MenuItemLink[] = [
     { href: "/dashboard/qr-code", title: "Mi código QR" },
     {
         href: "/dashboard/borrow-items",
@@ -25,6 +20,10 @@ const dashboardNavigationLinks: NavigationLink[] = [
             },
         ],
     },
+    {
+        href: "/dashboard/verify",
+        title: "Verificar cuenta",
+    },
 ];
 
 export default function DashboardLayout({
@@ -32,7 +31,6 @@ export default function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const [showSidebar, setShowSidebar] = useState(false);
     return (
         <div className="min-h-screen">
             <nav className="flex mb-5 items-center justify-between border-b border-grey">
@@ -49,18 +47,7 @@ export default function DashboardLayout({
                 <UserButton afterSignOutUrl="/" />
             </nav>
             <div className="flex-col grid lg:flex-row lg:flex">
-                <div
-                    onClick={() => setShowSidebar(!showSidebar)}
-                    className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-24 justify-self-end lg:hidden"
-                >
-                    <p>Menú</p>
-                    <IoIosArrowForward size={20} />
-                </div>
-                <SideBar
-                    links={dashboardNavigationLinks}
-                    show={showSidebar}
-                    showSetter={setShowSidebar}
-                />
+                <Menu title="Dashboard" titleHref="/dashboard" menuItemLinks={dashboardNavigationLinks} />
                 <div className="flex flex-col w-full lg:ml-20">{children}</div>
             </div>
         </div>

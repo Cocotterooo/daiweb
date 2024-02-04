@@ -3,12 +3,33 @@ import Image from "next/image";
 import { currentUser } from "@clerk/nextjs";
 import QRCode from "qrcode";
 import { CustomText } from "@/components/CustomText";
+import { isUserVerified } from "@/database/user";
 
 export default async function QRCodePage() {
     const user = await currentUser();
 
     if (!user) {
         return null;
+    }
+
+    if (!(await isUserVerified(user.id))) {
+        return (
+            <>
+                <CustomText.h1>Mi código QR</CustomText.h1>
+                <p>
+                    Por favor, verifica tu usuario para que puedas generar tu
+                    código QR.
+                </p>
+                <div className="flex flex-col items-center">
+                    <Link
+                        href="/dashboard/verify"
+                        className="p-2 my-4 rounded bg-black max-w-fit"
+                    >
+                        Verificar usuario
+                    </Link>
+                </div>
+            </>
+        );
     }
 
     // TODO: Will need to parse public metadata in the future ?
