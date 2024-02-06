@@ -5,6 +5,9 @@ import rehypeSlug from "rehype-slug";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+    experimental: {
+        serverComponentsExternalPackages: ["pdf2json"]
+    }
 };
 
 const withMDX = createMDX({

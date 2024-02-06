@@ -32,7 +32,11 @@ export default function DocsLayout({
     return (
         <div className="min-h-screen">
             <div className="flex-col grid lg:flex-row lg:flex">
-                <Menu title="Documentación" titleHref="/docs" menuItemLinks={docsMenuLinks} />
+                <Menu
+                    title="Documentación"
+                    titleHref="/docs"
+                    menuItemLinks={docsMenuLinks}
+                />
                 <div className="flex flex-col w-full min-h-screen lg:ml-20">
                     {children}
                 </div>
