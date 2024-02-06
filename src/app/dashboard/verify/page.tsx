@@ -6,22 +6,24 @@ import { useState } from "react";
 
 export default function VerifyPage() {
     const [file, setFile] = useState<File>();
-    const {user, isLoaded, isSignedIn} = useUser()
+    const { user, isLoaded, isSignedIn } = useUser();
     if (!user) {
-        return null
+        return null;
     }
     if (!isLoaded) {
         return null;
     }
 
-    console.log(user.publicMetadata)
     if (user.publicMetadata.studentIsVerified === true) {
         return (
             <>
-            <CustomText.h1>Verificar tu cuenta</CustomText.h1>
-            <p>Tu cuenta está verificada. Estás listo para disfrutar de todos los beneficios de la DAI</p>
-</>
-        )
+                <CustomText.h1>Verificar tu cuenta</CustomText.h1>
+                <p>
+                    Tu cuenta está verificada. Estás listo para disfrutar de
+                    todos los beneficios de la DAI
+                </p>
+            </>
+        );
     }
 
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -52,10 +54,13 @@ export default function VerifyPage() {
             <CustomText.h1>Verificar cuenta</CustomText.h1>
             <CustomText.h2>Sube tu matrícula</CustomText.h2>
             <p>
-                No guardamos tus datos. Solo los utilizamos para
-                verificar la validez de tu matrícula
+                No guardamos tus datos. Solo los utilizamos para verificar la
+                validez de tu matrícula
             </p>
-            <form onSubmit={onSubmit} className="flex flex-col items-center my-4">
+            <form
+                onSubmit={onSubmit}
+                className="flex flex-col items-center my-4"
+            >
                 <input
                     className="bg-black p-2 rounded w-96 cursor-pointer"
                     type="file"

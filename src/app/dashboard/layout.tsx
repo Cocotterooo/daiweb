@@ -47,7 +47,11 @@ export default function DashboardLayout({
                 <UserButton afterSignOutUrl="/" />
             </nav>
             <div className="flex-col grid lg:flex-row lg:flex">
-                <Menu title="Dashboard" titleHref="/dashboard" menuItemLinks={dashboardNavigationLinks} />
+                <Menu
+                    title="Dashboard"
+                    titleHref="/dashboard"
+                    menuItemLinks={dashboardNavigationLinks}
+                />
                 <div className="flex flex-col w-full lg:ml-20">{children}</div>
             </div>
         </div>

@@ -1,51 +1,18 @@
-import { dbclient } from "@/server/database";
+import { Database } from "@/database/database.types";
 import { getUniqueItemsFromArray } from "@/utils/arrayFuncs";
-import { ObjectId } from "mongodb";
+import { BookItem } from "./BookItem";
+import { bookItem } from "@/actions/bookItem";
 
-async function availableLaptops() {
-    try {
-        const inventoryCollection = (await dbclient())
-            .db("inventory")
-            .collection("items");
-        const availableItems = await inventoryCollection
-            .find({ available: true, booked: false })
-            .toArray();
-        if (availableItems.length === 0) {
-            return null;
-        }
-        return availableItems as InventoryLaptop[];
-    } catch (error: any) {
-        console.error(error);
-    }
-}
-
-type InventoryLaptop = {
-    _id: ObjectId;
-    description: string;
-    status: string;
-    metadata: {
-        brand: string;
-        model: string;
-        universityDesignation: string;
-        factoryId: string;
-        macAddress: {
-            device: string;
-            address: string;
-        };
-        comments?: string | null;
-        adapter: {
-            id: ObjectId;
-        };
-    };
-    barcode: number;
+type AvailableItemsTableProps = {
+    userId: number;
+    items: Database["public"]["Tables"]["inventory_item"]["Row"][];
 };
 
-export async function InventoryLaptopsTable() {
-    const laptops = await availableLaptops();
-    if (!laptops) {
-        return null;
-    }
-    const uniqueLaptops = getUniqueItemsFromArray(laptops);
+export function AvailableItemsTable({
+    userId,
+    items,
+}: AvailableItemsTableProps) {
+    const uniqueItems = getUniqueItemsFromArray(items);
 
     return (
         <div className="flex items-center mt-4">
@@ -60,30 +27,31 @@ export async function InventoryLaptopsTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {uniqueLaptops.map((laptop, indx) => {
+                    {uniqueItems.map((item, indx) => {
                         const borderBottom =
-                            indx < uniqueLaptops.length - 1 ? "border-b" : "";
+                            indx < uniqueItems.length - 1 ? "border-b" : "";
                         return (
                             <tr
                                 key={indx}
                                 className={`group py-2 items-center border-grey cursor-pointer ${borderBottom}`}
                             >
                                 <td className="px-2 justify-start">
-                                    {laptop.description}
+                                    {item.description}
                                 </td>
                                 <td className="px-2 justify-start text-center">
                                     {
-                                        laptops.filter(
+                                        items.filter(
                                             (value) =>
                                                 value.description ===
-                                                laptop.description
+                                                item.description
                                         ).length
                                     }
                                 </td>
                                 <td className="px-2">
-                                    <div className="p-2 my-2 rounded w-24 flex bg-black items-center justify-center invisible group-hover:visible">
-                                        <p>Reservar</p>
-                                    </div>
+                                    <BookItem
+                                        itemId={items[0].id}
+                                        action={bookItem}
+                                    />
                                 </td>
                             </tr>
                         );
