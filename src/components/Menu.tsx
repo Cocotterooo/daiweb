@@ -10,7 +10,7 @@ type MenuProps = {
     titleHref: string;
     menuItemLinks: MenuItemLink[];
 };
-export function Menu({ title, titleHref,menuItemLinks }: MenuProps) {
+export function Menu({ title, titleHref, menuItemLinks }: MenuProps) {
     const [showSidebar, setShowSidebar] = useState(false);
 
     return (
