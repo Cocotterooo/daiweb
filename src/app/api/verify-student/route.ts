@@ -35,8 +35,8 @@ export async function POST(request: Request) {
             !parseStudentSignUpPdfFileContent(
                 keywords,
                 "2023/24",
-                "Axel Ivan Alonso Rodríguez Chang",
-                "118251199"
+                "the name",
+                "the id number"
             )
         ) {
             return new Response(null, { status: 500 });
@@ -44,15 +44,17 @@ export async function POST(request: Request) {
         const { data, error } = await database
             .from("user")
             .update({ is_verified: true })
-            .eq("external_user_id", externalUserId)
+            .eq("external_user_id", externalUserId);
         if (error) {
             console.error(error);
-            return new Response(null, { status: 500 });      }
+            return new Response(null, { status: 500 });
+        }
 
         await clerkClient.users.updateUserMetadata(externalUserId, {
             publicMetadata: {
-                studentIsVerified: true
-            }})
+                studentIsVerified: true,
+            },
+        });
 
         return new Response(null, { status: 200 });
     });
