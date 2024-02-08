@@ -30,14 +30,14 @@ export default function DocsLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen">
+        <div className="min-h-full">
             <div className="flex-col grid lg:flex-row lg:flex">
                 <Menu
                     title="Documentación"
                     titleHref="/docs"
                     menuItemLinks={docsMenuLinks}
                 />
-                <div className="flex flex-col w-full min-h-screen lg:ml-20">
+                <div className="flex flex-col w-full min-h-full lg:ml-20">
                     {children}
                 </div>
             </div>

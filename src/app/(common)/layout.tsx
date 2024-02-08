@@ -7,7 +7,7 @@ export default function CommonLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-full">
             <nav className="flex mb-2 py-1 items-center justify-between border-b border-grey">
                 <ul className="flex items-center">
                     <Link href="/">
@@ -59,7 +59,7 @@ export default function CommonLayout({
             </nav>
             {children}
             <footer className="flex mt-10 pt-1 pb-5 flex-col items-center">
-                <p>&copy; 2024 DAI - Galicia, España</p>
+                <p>&copy;2024 DAI - Galicia, España</p>
             </footer>
         </div>
     );
