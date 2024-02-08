@@ -133,7 +133,7 @@ export default function SignUpPage() {
                             id="email"
                             name="email"
                             type="email"
-                            placeholder="harrypotter@alumnos.uvigo.es"
+                            placeholder="harrypotter@alumnos.uvigo.gal"
                         />
                         <TextInput
                             htmlFor="password"
@@ -193,7 +193,7 @@ export default function SignUpPage() {
                     </form>
                 </div>
             )}
-            {errored && (
+            {errored && errorMessage && (
                 <div className="flex items-center text-rose-500 my-4">
                     <p>{errorMessage}</p>
                 </div>

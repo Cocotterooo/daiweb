@@ -1,16 +1,26 @@
 "use client";
 
 import { CustomText } from "@/components/CustomText";
+import { TextInput } from "@/components/TextInput";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function VerifyPage() {
-    const [file, setFile] = useState<File>();
+    const router = useRouter();
     const { user, isLoaded, isSignedIn } = useUser();
-    if (!user) {
+
+    const [studentFullName, setStudentFullName] = useState("");
+    const [studentId, setStudentId] = useState("");
+    const [file, setFile] = useState<File>();
+    const [errored, setErrored] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    if (!isLoaded) {
         return null;
     }
-    if (!isLoaded) {
+
+    if (!user || !isSignedIn) {
         return null;
     }
 
@@ -28,23 +38,48 @@ export default function VerifyPage() {
 
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (!file) {
-            return null;
+
+        if (!(studentFullName && studentId)) {
+            setErrored(true);
+            setErrorMessage("Por favor, llena todas las cajitas en blanco.");
+            return;
         }
+
+        if (!file) {
+            setErrored(true);
+            setErrorMessage("Por favor, sube tu archivo de matrícula");
+            return;
+        }
+
+        if (file.type !== "application/pdf") {
+            setErrored(true);
+            setErrorMessage("Solo son válidos archivos PDF.");
+            return;
+        }
+
         const data = new FormData();
         data.set("file", file);
+        data.set("studentFullName", studentFullName);
+        data.set("studentId", studentId);
+
         try {
             const response = await fetch("/api/verify-student", {
                 method: "POST",
                 body: data,
             });
             if (!response.ok) {
-                console.error(await response.text());
+                setErrored(true);
+                setErrorMessage(
+                    "Algo salió mal. Por favor, vuelve a intentarlo más tarde."
+                );
                 return null;
             }
-            console.log(await response.text());
+            console.log("Verificación correcta.");
         } catch (error: any) {
-            console.error(error);
+            setErrored(true);
+            setErrorMessage(
+                "Algo salió mal. Por favor, vuelve a intentarlo más tarde."
+            );
             return null;
         }
     }
@@ -55,24 +90,65 @@ export default function VerifyPage() {
             <CustomText.h2>Sube tu matrícula</CustomText.h2>
             <p>
                 No guardamos tus datos. Solo los utilizamos para verificar la
-                validez de tu matrícula
+                validez de tu matrícula.
             </p>
-            <form
-                onSubmit={onSubmit}
-                className="flex flex-col items-center my-4"
-            >
-                <input
-                    className="bg-black p-2 rounded w-96 cursor-pointer"
-                    type="file"
-                    name="file"
-                    onChange={(e) => setFile(e.target.files?.[0])}
-                />
-                <input
-                    type="submit"
-                    value="Subir archivo"
-                    className="bg-black p-2 rounded my-4 cursor-pointer"
-                />
-            </form>
+            <div className="flex flex-col items-center justify-center">
+                <form
+                    onSubmit={onSubmit}
+                    className="flex flex-col items-center my-1.5 w-72"
+                >
+                    <TextInput
+                        label="Tu nombre completo (como aparece en tu matrícula)"
+                        htmlFor="text"
+                        onChange={(element) => {
+                            setErrored(false);
+                            setErrorMessage("");
+                            setStudentFullName(element.target.value);
+                        }}
+                        id="first-name"
+                        name="first-name"
+                        type="text"
+                        placeholder="Nombres y apellidos"
+                    />
+                    <TextInput
+                        label="Tu DNI con letra"
+                        htmlFor="text"
+                        onChange={(element) => {
+                            setErrored(false);
+                            setErrorMessage("");
+                            setStudentId(element.target.value);
+                        }}
+                        id="dni"
+                        name="dni"
+                        type="text"
+                        placeholder="DNI"
+                    />
+                    <input
+                        className="my-1.5 p-2
+                        file:rounded file:border-0
+                        file:m-1.5 file:p-2 file:mx-5
+                        file:cursor-pointer file:bg-black file:text-white
+                        "
+                        type="file"
+                        name="file"
+                        onChange={(element) => {
+                            setErrored(false);
+                            setErrorMessage("");
+                            setFile(element.target.files?.[0]);
+                        }}
+                    />
+                    <input
+                        className="bg-black p-2 rounded my-1.5 cursor-pointer"
+                        type="submit"
+                        value="Verificar cuenta"
+                    />
+                </form>
+                {errored && errorMessage && (
+                    <div className="flex items-center text-rose-500 my-4">
+                        <p>{errorMessage}</p>
+                    </div>
+                )}
+            </div>
         </>
     );
 }
