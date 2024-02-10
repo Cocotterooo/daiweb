@@ -1,5 +1,6 @@
-export type MenuItemLink = {
-    href: string;
+export type MenuItemInfo = {
     title: string;
-    children?: MenuItemLink[];
+    children?: MenuItemInfo[];
+    href?: string | undefined;
+    isChild?: boolean | undefined;
 };

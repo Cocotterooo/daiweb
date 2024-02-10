@@ -1,22 +1,24 @@
 import { Menu } from "@/components/Menu";
-import { MenuItemLink } from "@/types";
+import { MenuItemInfo } from "@/types";
 
-const docsMenuLinks: MenuItemLink[] = [
+const docsMenuLinks: MenuItemInfo[] = [
     {
-        href: "/docs/primeros-pasos",
         title: "Primeros pasos",
         children: [
             {
                 href: "/docs/primeros-pasos/crear-cuenta-dai",
                 title: "Crea tu cuenta DAI",
+                isChild: true,
             },
             {
                 href: "/docs/primeros-pasos/correo-uvigo",
                 title: "Añadir el correo de la uvigo",
+                isChild: true,
             },
             {
                 href: "/docs/primeros-pasos/wifi",
                 title: "Activar el WiFi",
+                isChild: true,
             },
         ],
     },
@@ -31,15 +33,13 @@ export default function DocsLayout({
 }) {
     return (
         <div className="min-h-full">
-            <div className="flex-col grid lg:flex-row lg:flex">
+            <div className="grid flex-col lg:flex lg:flex-row">
                 <Menu
                     title="Documentación"
                     titleHref="/docs"
                     menuItemLinks={docsMenuLinks}
                 />
-                <div className="flex flex-col w-full min-h-full lg:ml-20">
-                    {children}
-                </div>
+                <div className="flex min-h-full flex-col">{children}</div>
             </div>
         </div>
     );

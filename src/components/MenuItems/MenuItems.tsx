@@ -1,32 +1,42 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { MenuItemLink } from "@/types";
+import { MenuItemInfo } from "@/types";
 import { SetStateAction } from "react";
-import { MenuItem } from "./MenuItem";
 import { Fragment } from "react";
+import { ChildMenuItem } from "./ChildMenuItem";
+import { ParentMenuItem } from "./ParentMenuItem";
+import { TopMenuItem } from "./TopMenuItem";
 
 // This function makes me feel sad. Can I do better than this?
 function displayMenuItems(
-    { href, title, children }: MenuItemLink,
+    { href, title, children, isChild }: MenuItemInfo,
     textStyleCallback: (value: SetStateAction<boolean>) => void,
     pathname: string,
     className?: string | undefined
 ): React.ReactNode {
-    let itemClassName = "hover:text-black";
-    if (href === pathname) {
-        itemClassName = "text-black";
-    }
-
+    const isMenuItemActive = href === pathname;
     const keyArray = new Uint8Array(5);
     crypto.getRandomValues(keyArray);
+
     if (!children || children.length === 0) {
+        if (!isChild) {
+            return (
+                <TopMenuItem
+                    key={keyArray.join("")}
+                    title={title}
+                    href={href!}
+                    isActive={isMenuItemActive}
+                    onClick={() => textStyleCallback((oldVal) => !oldVal)}
+                />
+            );
+        }
         return (
-            <MenuItem
+            <ChildMenuItem
                 key={keyArray.join("")}
-                className={`${itemClassName} ${className}`}
                 title={title}
-                href={href}
+                href={href!}
+                isActive={isMenuItemActive}
                 onClick={() => textStyleCallback((oldVal) => !oldVal)}
             />
         );
@@ -34,16 +44,20 @@ function displayMenuItems(
 
     return (
         <Fragment key={keyArray.join("")}>
-            <MenuItem
-                className={`${className}`}
-                title={title}
-                href={href}
-                onClick={() => textStyleCallback((oldVal) => !oldVal)}
-            />
+            {!href && <ParentMenuItem title={title} />}
+            {href && (
+                <ChildMenuItem
+                    key={keyArray.join("")}
+                    title={title}
+                    href={href!}
+                    isActive={isMenuItemActive}
+                    onClick={() => textStyleCallback((oldVal) => !oldVal)}
+                />
+            )}
             <>
-                {children.map(({ href, title, children }) =>
+                {children.map(({ href, title, children, isChild }) =>
                     displayMenuItems(
-                        { href, title, children },
+                        { href, title, children, isChild },
                         textStyleCallback,
                         pathname,
                         (className = `${className} pl-4`)
@@ -55,7 +69,7 @@ function displayMenuItems(
 }
 
 type MenuItemsProps = {
-    links: MenuItemLink[];
+    links: MenuItemInfo[];
     textStyleCallback: (value: SetStateAction<boolean>) => void;
 };
 

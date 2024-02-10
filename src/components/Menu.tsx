@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosMenu } from "react-icons/io";
 import SideBar from "@/components/SideBar";
-import { MenuItemLink } from "@/types";
+import { MenuItemInfo } from "@/types";
 
 type MenuProps = {
     title: string;
     titleHref: string;
-    menuItemLinks: MenuItemLink[];
+    menuItemLinks: MenuItemInfo[];
 };
 export function Menu({ title, titleHref, menuItemLinks }: MenuProps) {
     const [showSidebar, setShowSidebar] = useState(false);
@@ -17,10 +17,10 @@ export function Menu({ title, titleHref, menuItemLinks }: MenuProps) {
         <>
             <div
                 onClick={() => setShowSidebar(!showSidebar)}
-                className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-24 justify-self-end lg:hidden"
+                className="mb-5 flex cursor-pointer items-center justify-center justify-self-end
+                rounded bg-black p-1 lg:hidden"
             >
-                <p>Más docs</p>
-                <IoIosArrowForward size={20} />
+                <IoIosMenu size={20} />
             </div>
             <SideBar
                 title={title}

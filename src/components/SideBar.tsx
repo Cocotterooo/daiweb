@@ -2,12 +2,12 @@
 
 import { Dispatch, SetStateAction } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { MenuItems } from "./MenuItems";
-import { MenuItemLink } from "@/types";
+import { MenuItems } from "./MenuItems/MenuItems";
+import { MenuItemInfo } from "@/types";
 import Link from "next/link";
 
 type SideBarProps = {
-    links: MenuItemLink[];
+    links: MenuItemInfo[];
     show: boolean;
     showSetter: Dispatch<SetStateAction<boolean>>;
     title?: string | undefined;
@@ -22,13 +22,13 @@ export default function SideBar({
     showSetter,
 }: SideBarProps) {
     const className =
-        "bg-[#0c4d66] px-2 w-125 transition-[margin-right] ease-in-out duration-500 fixed md:static top-0 bottom-0 right-0 z-40 lg:bg-transparent";
-    const appendClass = show ? " mr-0" : " mr-[-250px] md:mr-0";
+        "bg-[#0c4d66] px-2 w-[18rem] transition-[margin-right] ease-in-out duration-500 fixed md:static top-0 bottom-0 right-0 z-40 lg:bg-transparent lg:w-[20rem] lg:mr-4";
+    const appendClass = show ? " mr-0" : " mr-[-18rem] md:mr-0";
 
     function ModalOverlay() {
         return (
             <div
-                className="flex fixed top-0 right-0 bottom-0 left-0 bg-black/50 z-30 lg:hidden"
+                className="fixed bottom-0 left-0 right-0 top-0 z-30 flex bg-black/50 lg:hidden"
                 onClick={() => showSetter(!show)}
             ></div>
         );
@@ -38,20 +38,19 @@ export default function SideBar({
         <>
             <div className={`${className}${appendClass}`}>
                 <div
-                    className="flex flex-row p-1 mb-5 rounded bg-black items-center justify-center cursor-pointer w-16 justify-self-end lg:hidden"
+                    className="mb-4 ml-4 mt-2 flex w-6 cursor-pointer justify-center rounded bg-black p-1 lg:hidden"
                     onClick={() => showSetter(!show)}
                 >
                     <IoIosArrowBack />
-                    Atrás
                 </div>
                 {title && titleHref && (
-                    <div>
-                        <Link href={titleHref} className="font-bold text-xl">
+                    <div className="mb-2 ml-4">
+                        <Link href={titleHref} className="text-xl font-bold">
                             {title}
                         </Link>
                     </div>
                 )}
-                <div className="flex flex-col">
+                <div className="ml-4 flex flex-col">
                     <MenuItems links={links} textStyleCallback={showSetter} />
                 </div>
             </div>

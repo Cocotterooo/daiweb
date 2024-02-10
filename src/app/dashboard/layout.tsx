@@ -1,22 +1,23 @@
 import { Menu } from "@/components/Menu";
-import { MenuItemLink } from "@/types";
-import { UserButton } from "@clerk/nextjs";
+import { MenuItemInfo } from "@/types";
+import { UserButton, currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
-const dashboardNavigationLinks: MenuItemLink[] = [
+const dashboardNavigationLinks: MenuItemInfo[] = [
     { href: "/dashboard/qr-code", title: "Mi código QR" },
     {
-        href: "/dashboard/borrow-items",
         title: "Préstamo de materiales",
         children: [
             {
                 href: "/dashboard/borrow-items/laptops",
                 title: "Préstamo de portátiles",
+                isChild: true,
             },
             {
                 href: "/dashboard/borrow-items/other",
                 title: "Préstamo de otros materiales",
+                isChild: true,
             },
         ],
     },
@@ -26,14 +27,27 @@ const dashboardNavigationLinks: MenuItemLink[] = [
     },
 ];
 
-export default function DashboardLayout({
+const adminNavigationLinks: MenuItemInfo[] = [
+    {
+        href: "/dashboard/admin/lend-items",
+        title: "Prestar ordenador",
+    },
+];
+
+export default async function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const user = await currentUser();
+    if (!user) {
+        return null;
+    }
+    const menuLinks = dashboardNavigationLinks;
+
     return (
         <div className="min-h-screen">
-            <nav className="flex mb-5 items-center justify-between border-b border-grey">
+            <nav className="border-grey mb-5 flex items-center justify-between border-b">
                 <Link href="/">
                     <Image
                         className="my-5"
@@ -46,13 +60,13 @@ export default function DashboardLayout({
                 </Link>
                 <UserButton afterSignOutUrl="/" />
             </nav>
-            <div className="flex-col grid lg:flex-row lg:flex">
+            <div className="grid flex-col lg:flex lg:flex-row">
                 <Menu
                     title="Dashboard"
                     titleHref="/dashboard"
                     menuItemLinks={dashboardNavigationLinks}
                 />
-                <div className="flex flex-col w-full lg:ml-20">{children}</div>
+                <div className="flex flex-col">{children}</div>
             </div>
         </div>
     );
