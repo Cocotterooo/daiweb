@@ -24,7 +24,7 @@ export default async function LaptopsPage() {
         <>
             <CustomText.h1>Préstamo de portátiles</CustomText.h1>
             <p>Busca y reserva un portátil</p>
-            <h2 className="text-lg font-bold mt-4">Reserva de portátiles</h2>
+            <h2 className="mt-4 text-lg font-bold">Reserva de portátiles</h2>
             <AvailableItemsTable userId={userId} items={items} />
         </>
     );

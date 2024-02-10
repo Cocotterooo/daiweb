@@ -112,14 +112,14 @@ export default function SignUpPage() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center mt-12">
+        <div className="mt-12 flex flex-col items-center justify-center">
             <div className="mb-3.5">
                 <h1 className="text-4xl font-bold">Crea tu cuenta</h1>
             </div>
             {!pendingVerification && (
                 <div className="flex flex-col items-center justify-center">
                     <form
-                        className="flex flex-col items-center my-1.5 w-60"
+                        className="my-1.5 flex w-60 flex-col items-center"
                         onSubmit={handleSubmit}
                     >
                         <TextInput
@@ -163,7 +163,7 @@ export default function SignUpPage() {
             )}
             {pendingVerification && (
                 <div className="flex flex-col items-center justify-center">
-                    <div className="w-full flex-start">
+                    <div className="flex-start w-full">
                         <button
                             onClick={() => {
                                 setPendingVerification(false);
@@ -178,7 +178,7 @@ export default function SignUpPage() {
                             </div>
                         </button>
                     </div>
-                    <form className="flex flex-col my-1.5 w-60">
+                    <form className="my-1.5 flex w-60 flex-col">
                         <TextInput
                             value={code}
                             htmlFor="verification-code"
@@ -194,13 +194,13 @@ export default function SignUpPage() {
                 </div>
             )}
             {errored && errorMessage && (
-                <div className="flex items-center text-rose-500 my-4">
+                <div className="my-4 flex items-center text-rose-500">
                     <p>{errorMessage}</p>
                 </div>
             )}
             <div className="flex flex-row">
                 <p>¿Ya tienes una cuenta?&nbsp;</p>
-                <Link href="/auth/sign-in" className="underline text-rose-300">
+                <Link href="/auth/sign-in" className="text-rose-300 underline">
                     Ingresa
                 </Link>
             </div>

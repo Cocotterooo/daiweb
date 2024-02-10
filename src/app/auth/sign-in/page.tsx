@@ -64,19 +64,19 @@ export default function SignInPage() {
     return (
         <>
             {!isSignedIn && (
-                <div className="flex flex-col items-center justify-center mt-12">
+                <div className="mt-12 flex flex-col items-center justify-center">
                     <div className="mb-3.5">
                         <h1 className="text-4xl font-bold">Ingresa sesión</h1>
                     </div>
                     <div className="flex flex-col items-center justify-center">
                         <form
-                            className="flex flex-col items-center my-1.5 w-60"
+                            className="my-1.5 flex w-60 flex-col items-center"
                             onSubmit={submit}
                         >
-                            <div className="flex flex-col my-1.5 w-60">
+                            <div className="my-1.5 flex w-60 flex-col">
                                 <label htmlFor="email">Correo</label>
                                 <input
-                                    className="my-0.5 rounded text-black py-0.5 px-1.5 bg-[#f2f2f2]"
+                                    className="my-0.5 rounded bg-[#f2f2f2] px-1.5 py-0.5 text-black"
                                     type="email"
                                     value={email}
                                     placeholder="Ingresa tu correo"
@@ -87,10 +87,10 @@ export default function SignInPage() {
                                     }}
                                 />
                             </div>
-                            <div className="flex flex-col my-1.5 w-60">
+                            <div className="my-1.5 flex w-60 flex-col">
                                 <label htmlFor="password">Contraseña</label>
                                 <input
-                                    className="my-0.5 rounded text-black py-0.5 px-1.5 bg-[#f2f2f2]"
+                                    className="my-0.5 rounded bg-[#f2f2f2] px-1.5 py-0.5 text-black"
                                     type="password"
                                     value={password}
                                     placeholder="Ingresa tu contraseña"
@@ -104,13 +104,13 @@ export default function SignInPage() {
                             <Button onClick={submit} title="Continúa" />
                         </form>
                         {errored && (
-                            <div className="flex items-center text-rose-500 my-4">
+                            <div className="my-4 flex items-center text-rose-500">
                                 <p>{errorMessage}</p>
                             </div>
                         )}
                         <Link
                             href="/auth/forgot-password"
-                            className="mb-3 underline text-rose-300"
+                            className="mb-3 text-rose-300 underline"
                         >
                             ¿Olvidaste tu contraseña?
                         </Link>
@@ -118,7 +118,7 @@ export default function SignInPage() {
                             <p>¿No tienes una cuenta?&nbsp;</p>
                             <Link
                                 href="/auth/sign-up"
-                                className="underline text-rose-300"
+                                className="text-rose-300 underline"
                             >
                                 Créala
                             </Link>

@@ -65,7 +65,7 @@ export default function Blog() {
     return (
         <div className="flex flex-col items-center">
             <div className="flex flex-col">
-                <h1 className="flex justify-center text-6xl font-bold mb-8">
+                <h1 className="mb-8 flex justify-center text-6xl font-bold">
                     Daily: el blog de la DAI
                 </h1>
                 {blogcont.map(

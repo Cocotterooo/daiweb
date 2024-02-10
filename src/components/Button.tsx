@@ -7,7 +7,7 @@ type ButtonProps = {
 export function Button({ title, onClick }: ButtonProps) {
     return (
         <button
-            className="rounded bg-black p-1.5 my-2.5 w-full"
+            className="my-2.5 w-full rounded bg-black p-1.5"
             onClick={onClick}
         >
             {title}

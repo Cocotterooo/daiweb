@@ -24,10 +24,10 @@ export function TextInput({
     hidden,
 }: TextInputProps): JSX.Element {
     return (
-        <div className="flex flex-col my-1.5 min-w-full">
+        <div className="my-1.5 flex min-w-full flex-col">
             <label htmlFor={htmlFor}>{label}</label>
             <input
-                className="my-0.5 py-0.5 px-1.5 rounded text-black"
+                className="my-0.5 rounded px-1.5 py-0.5 text-black"
                 onChange={onChange}
                 id={id}
                 name={name}

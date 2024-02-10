@@ -23,7 +23,7 @@ export default async function QRCodePage() {
                 <div className="flex flex-col items-center">
                     <Link
                         href="/dashboard/verify"
-                        className="p-2 my-4 rounded bg-black max-w-fit"
+                        className="my-4 max-w-fit rounded bg-black p-2"
                     >
                         Verificar usuario
                     </Link>
@@ -59,7 +59,7 @@ export default async function QRCodePage() {
                 Muestra este código en la sede de la DAI para solicitar algún
                 préstamo.
             </p>
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center justify-center">
                 <div className="my-4">
                     <Image
                         priority
@@ -76,7 +76,7 @@ export default async function QRCodePage() {
                         href="/docs/prestamo-de-materiales"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline text-pink-400"
+                        className="text-pink-400 underline"
                     >
                         Haz click aquí
                     </Link>

@@ -25,7 +25,7 @@ export function BookItem({ itemId, action }: BookItemProps) {
     return (
         <>
             <button
-                className="p-2 my-2 rounded w-24 flex bg-black items-center justify-center invisible group-hover:visible"
+                className="invisible my-2 flex w-24 items-center justify-center rounded bg-black p-2 group-hover:visible"
                 onClick={async () => await onClickBookButton(itemId, user.id)}
             >
                 Reservar

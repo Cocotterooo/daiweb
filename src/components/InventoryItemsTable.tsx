@@ -15,12 +15,12 @@ export function AvailableItemsTable({
     const uniqueItems = getUniqueItemsFromArray(items);
 
     return (
-        <div className="flex items-center mt-4">
-            <table className="table-auto my-4 text-left w-full">
+        <div className="mt-4 flex items-center">
+            <table className="my-4 w-full table-auto text-left">
                 <thead>
-                    <tr className="items-center border-b border-grey">
-                        <th className="px-2 justify-start">Descripción</th>
-                        <th className="px-2 justify-start text-center">
+                    <tr className="border-grey items-center border-b">
+                        <th className="justify-start px-2">Descripción</th>
+                        <th className="justify-start px-2 text-center">
                             Cantidad disponible
                         </th>
                         <th className="px-2"></th>
@@ -33,12 +33,12 @@ export function AvailableItemsTable({
                         return (
                             <tr
                                 key={indx}
-                                className={`group py-2 items-center border-grey cursor-pointer ${borderBottom}`}
+                                className={`border-grey group cursor-pointer items-center py-2 ${borderBottom}`}
                             >
-                                <td className="px-2 justify-start">
+                                <td className="justify-start px-2">
                                     {item.description}
                                 </td>
-                                <td className="px-2 justify-start text-center">
+                                <td className="justify-start px-2 text-center">
                                     {
                                         items.filter(
                                             (value) =>

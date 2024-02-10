@@ -3,16 +3,18 @@ import type { MDXComponents } from "mdx/types";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
         h1: ({ children }) => (
-            <h1 className="text-4xl font-bold text-center my-4">{children}</h1>
+            <h1 className="my-4 text-center text-4xl font-bold lg:text-start">
+                {children}
+            </h1>
         ),
         h2: ({ children }) => (
-            <h2 className="text-2xl font-bold my-4">{children}</h2>
+            <h2 className="my-4 text-2xl font-bold">{children}</h2>
         ),
         h3: ({ children }) => (
-            <h3 className="text-xl font-bold my-4">{children}</h3>
+            <h3 className="my-4 text-xl font-bold">{children}</h3>
         ),
         h4: ({ children }) => (
-            <h4 className="text-lg font-bold my-2">{children}</h4>
+            <h4 className="my-2 text-lg font-bold">{children}</h4>
         ),
         a: ({ children, href }) => (
             <a
@@ -25,19 +27,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             </a>
         ),
         ol: ({ children }) => (
-            <ol className="list-decimal pl-8 my-2">{children}</ol>
+            <ol className="my-2 list-decimal pl-8">{children}</ol>
         ),
         ul: ({ children }) => (
-            <ul className="list-disc pl-8 my-2">{children}</ul>
+            <ul className="my-2 list-disc pl-8">{children}</ul>
         ),
         li: ({ children }) => <li className="my-1">{children}</li>,
         code: ({ children }) => (
-            <div className="my-4 p-4 rounded bg-zinc-800">
+            <div className="my-4 rounded bg-zinc-800 p-4">
                 <code className="">{children}</code>
             </div>
         ),
         table: ({ children }) => (
-            <table className="table-auto my-4 p-2 border-0">{children}</table>
+            <table className="my-4 table-auto border-0 p-2">{children}</table>
         ),
         thead: ({ children }) => <thead>{children}</thead>,
         th: ({ children }) => <th className="p-2 font-normal">{children}</th>,

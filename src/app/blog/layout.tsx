@@ -7,7 +7,7 @@ export default function BlogLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex flex-col min-h-screen items-center">
+        <div className="flex min-h-screen flex-col items-center">
             <nav className="flex w-full items-center justify-start p-8">
                 <Link href="/">
                     <Image

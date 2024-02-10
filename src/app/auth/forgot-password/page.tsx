@@ -110,12 +110,12 @@ export default function ForgotPasswordPage() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center mt-12">
+        <div className="mt-12 flex flex-col items-center justify-center">
             <div className="mb-3.5">
                 <h1 className="text-xl font-bold">¿Olvidaste tu contraseña?</h1>
             </div>
             <form
-                className="flex flex-col items-center my-1.5 w-60"
+                className="my-1.5 flex w-60 flex-col items-center"
                 onSubmit={!successfulCreation ? create : reset}
             >
                 {!successfulCreation && !complete && (
@@ -185,19 +185,19 @@ export default function ForgotPasswordPage() {
                 )}
             </form>
             {errored && (
-                <div className="flex items-center text-rose-500 my-4">
+                <div className="my-4 flex items-center text-rose-500">
                     <p>{errorMessage}</p>
                 </div>
             )}
-            <div className="flex flex-row mb-2">
+            <div className="mb-2 flex flex-row">
                 <p>¿Recuerdas tu contraseña?&nbsp;</p>
-                <Link href="/auth/sign-in" className="underline text-rose-300">
+                <Link href="/auth/sign-in" className="text-rose-300 underline">
                     Ingresa sesión
                 </Link>
             </div>
             <div className="flex flex-row">
                 <p>¿Todavía no tienes una cuenta?&nbsp;</p>
-                <Link href="/auth/sign-up" className="underline text-rose-300">
+                <Link href="/auth/sign-up" className="text-rose-300 underline">
                     Crea una
                 </Link>
             </div>

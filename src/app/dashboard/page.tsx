@@ -1,3 +1,5 @@
+import { CustomText } from "@/components/CustomText";
+
 export default function DashboardPage() {
-    return <h1>Hi</h1>;
+    return <CustomText.h1>Dashboard</CustomText.h1>;
 }

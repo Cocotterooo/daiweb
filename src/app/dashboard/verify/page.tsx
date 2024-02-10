@@ -30,7 +30,7 @@ export default function VerifyPage() {
                 <CustomText.h1>Verificar tu cuenta</CustomText.h1>
                 <p>
                     Tu cuenta está verificada. Estás listo para disfrutar de
-                    todos los beneficios de la DAI
+                    todos los beneficios de la DAI.
                 </p>
             </>
         );
@@ -95,7 +95,7 @@ export default function VerifyPage() {
             <div className="flex flex-col items-center justify-center">
                 <form
                     onSubmit={onSubmit}
-                    className="flex flex-col items-center my-1.5 w-72"
+                    className="my-1.5 flex w-72 flex-col items-center"
                 >
                     <TextInput
                         label="Tu nombre completo (como aparece en tu matrícula)"
@@ -125,9 +125,9 @@ export default function VerifyPage() {
                     />
                     <input
                         className="my-1.5 p-2
-                        file:rounded file:border-0
-                        file:m-1.5 file:p-2 file:mx-5
-                        file:cursor-pointer file:bg-black file:text-white
+                        file:m-1.5 file:mx-5
+                        file:cursor-pointer file:rounded file:border-0
+                        file:bg-black file:p-2 file:text-white
                         "
                         type="file"
                         name="file"
@@ -138,13 +138,13 @@ export default function VerifyPage() {
                         }}
                     />
                     <input
-                        className="bg-black p-2 rounded my-1.5 cursor-pointer"
+                        className="my-1.5 cursor-pointer rounded bg-black p-2"
                         type="submit"
                         value="Verificar cuenta"
                     />
                 </form>
                 {errored && errorMessage && (
-                    <div className="flex items-center text-rose-500 my-4">
+                    <div className="my-4 flex items-center text-rose-500">
                         <p>{errorMessage}</p>
                     </div>
                 )}
